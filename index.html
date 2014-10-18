@@ -1,11 +1,238 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Processing.js Skeleton</title>
+  <title>Processing.js Monsters</title>
   <script src="js/processing-1.4.8.min.js"></script>
+  <script src="js/jquery-2.1.1.min.js"></script>
 </head>
 <body>
-  <h1>Processing Monsters</h1>
-  <canvas data-processing-sources="monsters/pesce_elettrico/pesce_elettrico.pde monsters/pesce_elettrico/zampette.pde"></canvas>
+  <table id="menu"></table>
+  <div id="monsters">
+    <h1>Processing Monsters</h1>
+  </div>
+  <canvas id='proc_canvas'></canvas>
 </body>
 </html>
+
+<script>
+$( document ).ready(function() {
+
+  var folders = ["bacteria_monster",
+   "blobby_blinky",
+   "bwmonster",
+   "chase",
+   "cloudmonster",
+   "cuc_monster",
+   "hihi",
+   "single_hair_monster",
+   "splouch",
+   "worms",
+   "worms_monsters",
+   "capriccioso_monster",
+   "shy-cell",
+   "X15",
+   "orlon2",
+   "spreader",
+   "sneaky_annie",
+   "swarm_monster",
+   "geared_monster",
+   "urchin",
+   "pedikas",
+   "moggio",
+   "pesce_elettrico",
+   "hair_mouse",
+   "IluMonster",
+   "prova_mostri",
+   "quadrato",
+   "show",
+   "who_is_the_monster",
+   "monstar",
+   "matthews_monster",
+   "segmentmonster",
+   "morph_monster",
+   "flocking_monster",
+   "waveyslimes",
+   "eye_monster",
+   "evans_monster",
+   "monsternatorz",
+   "rasta_creature",
+   "gurus_monster",
+   "cookie_monster",
+   "michaels_monster",
+   "bloob_monster",
+   "tank_monster",
+   "smoke_monster",
+   "black_tentacle_monster",
+   "snoggoth",
+   "teleport_monster",
+   "davids_monster",
+   "cube_monster",
+   "angry_otto",
+   "leaf_monster",
+   "db_monster",
+   "moritzs_monster",
+   "emotional_monster",
+   "gibbering_monster",
+   "ouroboros",
+   "string_monster",
+   "flatfish_monster",
+   "andreas",
+   "the_blob",
+   "blink_eye_monster",
+   "particle_monster",
+   "sliding_monster",
+   "monster6",
+   "monster5",
+   "monster4",
+   "monster3",
+   "monster2",
+   "monster1"]
+
+  var filepaths = {"bacteria_monster":
+  ["monsters/bacteria_monster/BacteriaMonster.pde",
+   "monsters/bacteria_monster/classCell.pde"],
+ "blobby_blinky":["monsters/blobby_blinky/BlobbyBlinky.pde"],
+ "bwmonster":
+  ["monsters/bwmonster/bwmonster.pde",
+   "monsters/bwmonster/BWSmoke.pde",
+   "monsters/bwmonster/Building.pde",
+   "monsters/bwmonster/Monster.pde",
+   "monsters/bwmonster/StickGuy.pde"],
+ "chase":
+  ["monsters/chase/Chase.pde",
+   "monsters/chase/Line2d.pde",
+   "monsters/chase/LinkedList.pde",
+   "monsters/chase/Monster.pde",
+   "monsters/chase/Vector2d.pde"],
+ "cloudmonster":["monsters/cloudmonster/cloudmonster.pde"],
+ "cuc_monster":["monsters/cuc_monster/cuc_monster.pde"],
+ "hihi":["monsters/hihi/hihi.pde"],
+ "single_hair_monster":["monsters/single_hair_monster/SingleHairMonster.pde"],
+ "splouch":["monsters/splouch/splouch.pde"],
+ "worms":["monsters/worms/worms.pde"],
+ "worms_monsters":["monsters/worms_monsters/Worms_Monsters.pde"],
+ "capriccioso_monster":
+  ["monsters/capriccioso_monster/CapricciosoMonster.pde"],
+ "shy-cell":["monsters/shy-cell/monsterproject1.pde"],
+ "X15":["monsters/X15/slugmonster_feb28a.pde"],
+ "orlon2":["monsters/orlon2/Orlon2.pde"],
+ "spreader":["monsters/spreader/Spreader.pde", "monsters/spreader/Eye.pde"],
+ "sneaky_annie":["monsters/sneaky_annie/SneakyAnnie.pde"],
+ "swarm_monster":
+  ["monsters/swarm_monster/MONSTER_2.pde",
+   "monsters/swarm_monster/LARVE.pde",
+   "monsters/swarm_monster/VEC3D.pde"],
+ "geared_monster":["monsters/geared_monster/GearedMonster.pde"],
+ "urchin":["monsters/urchin/UrchinPile_1.pde", "monsters/urchin/Urchin.pde"],
+ "pedikas":["monsters/pedikas/pedikas.pde", "monsters/pedikas/kreskaRec.pde"],
+ "moggio":
+  ["monsters/moggio/moggio.pde",
+   "monsters/moggio/pelliccia.pde",
+   "monsters/moggio/pelo.pde"],
+ "pesce_elettrico":
+  ["monsters/pesce_elettrico/pesce_elettrico.pde",
+   "monsters/pesce_elettrico/zampette.pde"],
+ "hair_mouse":
+  ["monsters/hair_mouse/hair_mouse.pde", "monsters/hair_mouse/hair.pde"],
+ "IluMonster":["monsters/IluMonster/IluMonster.pde"],
+ "prova_mostri":["monsters/prova_mostri/prova_mostri.pde"],
+ "quadrato":["monsters/quadrato/quadrato.pde"],
+ "show":["monsters/show/Show.pde"],
+ "who_is_the_monster":["monsters/who_is_the_monster/who_is_the_monster.pde"],
+ "monstar":
+  ["monsters/monstar/Monstar.pde",
+   "monsters/monstar/Body.pde",
+   "monsters/monstar/Eye.pde",
+   "monsters/monstar/Stalk.pde"],
+ "matthews_monster":["monsters/matthews_monster/sketch_dec04a.pde"],
+ "segmentmonster":
+  ["monsters/segmentmonster/segmentmonster.pde",
+   "monsters/segmentmonster/Eye.pde",
+   "monsters/segmentmonster/Segment.pde"],
+ "morph_monster":["monsters/morph_monster/MorphMonster.pde"],
+ "flocking_monster":
+  ["monsters/flocking_monster/flocloud.pde",
+   "monsters/flocking_monster/FlockingPart.pde"],
+ "waveyslimes":["monsters/waveyslimes/waveyslimes.pde"],
+ "eye_monster":["monsters/eye_monster/eye_monster.pde"],
+ "evans_monster":["monsters/evans_monster/evansCreature.pde"],
+ "monsternatorz":
+  ["monsters/monsternatorz/Monsternatorz.pde",
+   "monsters/monsternatorz/Monster1.pde",
+   "monsters/monsternatorz/Monsternator.pde",
+   "monsters/monsternatorz/Tentacle.pde"],
+ "rasta_creature":["monsters/rasta_creature/rastaCreature.pde"],
+ "gurus_monster":["monsters/gurus_monster/gurusMonster.pde"],
+ "cookie_monster":["monsters/cookie_monster/cookie_monster.pde"],
+ "michaels_monster":["monsters/michaels_monster/monster.pde"],
+ "bloob_monster":
+  ["monsters/bloob_monster/sketch_081118a.pde",
+   "monsters/bloob_monster/Bloob.pde",
+   "monsters/bloob_monster/Eye.pde"],
+ "tank_monster":["monsters/tank_monster/processingmonster.pde"],
+ "smoke_monster":["monsters/smoke_monster/smokemonster.pde"],
+ "black_tentacle_monster":
+  ["monsters/black_tentacle_monster/black_tentacle_monster.pde",
+   "monsters/black_tentacle_monster/Eye.pde",
+   "monsters/black_tentacle_monster/Monster.pde"],
+ "snoggoth":["monsters/snoggoth/Snoggoth.pde"],
+ "teleport_monster":["monsters/teleport_monster/teleport.pde"],
+ "davids_monster":
+  ["monsters/davids_monster/monster4.pde",
+   "monsters/davids_monster/tools.pde"],
+ "cube_monster":
+  ["monsters/cube_monster/cubeMonster.pde",
+   "monsters/cube_monster/Cube.pde",
+   "monsters/cube_monster/Monster.pde",
+   "monsters/cube_monster/Vec2.pde",
+   "monsters/cube_monster/Vec3.pde"],
+ "angry_otto":["monsters/angry_otto/angryOtto.pde"],
+ "leaf_monster":["monsters/leaf_monster/LeafMonster.pde"],
+ "db_monster":["monsters/db_monster/DBMonster.pde"],
+ "moritzs_monster":["monsters/moritzs_monster/_04_monster_2008.pde"],
+ "emotional_monster":["monsters/emotional_monster/Emotional_Monster.pde"],
+ "gibbering_monster":["monsters/gibbering_monster/Gibber.pde"],
+ "ouroboros":
+  ["monsters/ouroboros/ouroboros.pde",
+   "monsters/ouroboros/BodyPart.pde",
+   "monsters/ouroboros/eye.pde"],
+ "string_monster":
+  ["monsters/string_monster/String_monster.pde",
+   "monsters/string_monster/String_class.pde",
+   "monsters/string_monster/object.pde"],
+ "flatfish_monster":
+  ["monsters/flatfish_monster/flatfish_monster2d.pde",
+   "monsters/flatfish_monster/Boid.pde",
+   "monsters/flatfish_monster/Point.pde",
+   "monsters/flatfish_monster/Target.pde"],
+ "andreas":["monsters/andreas/monster.pde"],
+ "the_blob":["monsters/the_blob/DansMonster2.pde"],
+ "blink_eye_monster":
+  ["monsters/blink_eye_monster/BlinkEyeMonster.pde",
+   "monsters/blink_eye_monster/BodyPart.pde",
+   "monsters/blink_eye_monster/eye.pde",
+   "monsters/blink_eye_monster/grass.pde"],
+ "particle_monster":["monsters/particle_monster/particle_monster.pde"],
+ "sliding_monster":
+  ["monsters/sliding_monster/sliding_monster.pde",
+   "monsters/sliding_monster/Eyeball.pde",
+   "monsters/sliding_monster/Monster.pde"],
+ "monster6":["monsters/monster6/monster6.pde"],
+ "monster5":["monsters/monster5/monster5.pde"],
+ "monster4":["monsters/monster4/monster4.pde"],
+ "monster3":["monsters/monster3/monster3.pde"],
+ "monster2":["monsters/monster2/monster2.pde"],
+ "monster1":["monsters/monster1/monster1.pde"]}
+
+  for ( i = 0 ; i < folders.length ; i++){
+    $('#menu').append($('<button>',  {class: "monster", text: folders[i], id: folders[i]}));
+  }
+
+  $( '.monster' ).click(function( event) {
+    $('#proc_canvas')[0].remove();
+    $('#monsters').append($('<canvas>', {id: 'proc_canvas'}));
+    Processing.loadSketchFromSources('proc_canvas', filepaths[this.id] );
+  });
+
+});
+</script>
